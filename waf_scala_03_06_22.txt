@@ -1,0 +1,26 @@
+// command: spark-shell --master yarn --driver-memory 4g --executor-memory 4g --num-executors 4 --executor-cores 2 --queue network-jobs --conf spark.ui.port=8600
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.TimestampType
+import org.apache.spark.sql.functions.when
+import org.apache.spark.sql.functions.col
+val df = spark.read.text("/data/cybersecurity/tmp/waf_test.log")
+val df1 = df.filter(col("value").contains("ASM"))
+val df11=df1.withColumn("mssgtimestamp",regexp_extract(col("value"),">(\\w+\\s+\\d+\\s+[:\\d]+)",1)).withColumn("hostname",regexp_extract(col("value"),"\\s([-\\d\\w]+.com)",1)).withColumn("data_source_ip",regexp_extract(col("value"),"DataSource_Ip:([.\\d]+)",1)).withColumn("policy_name",regexp_extract(col("value"),"cs2=([\\S]+)",1)).withColumn("action",regexp_extract(col("value"),"act=(\\S+)",1)).withColumn("src_ip",regexp_extract(col("value"),"src=([.\\d]+)",1)).withColumn("src_port",regexp_extract(col("value"),"spt=([\\d]+)",1)).withColumn("dst_ip",regexp_extract(col("value"),"dst=([.\\d]+)",1)).withColumn("dst_port",regexp_extract(col("value"),"dpt=([\\d]+)",1)).withColumn("url",regexp_extract(col("value"),"request=(\\S+)",1)).withColumn("attack_type",regexp_extract(col("value"),"cs4=([\\S\\s]+)cs4Label",1)).withColumn("data_source_type",lit("F5 ASM")).withColumn("batch_ingestion_timestamp",current_timestamp)
+val df12=df11.withColumn("month", regexp_extract(col("value"),">(\\w+)\\s+\\d+\\s+[:\\d]+",1)).withColumn("date", regexp_extract(col("value"),">\\w+\\s+(\\d+)\\s+[:\\d]+",1)).withColumn("current_time", regexp_extract(col("value"),">\\w+\\s+\\d+\\s+([:\\d]+)",1)).withColumn("current_date",current_date()).withColumn("year",regexp_extract(col("current_date"),"([\\d]+)",1)).drop(col("current_date"))
+val df13=df12.withColumn("month", when(col("month") === "Jan", "01").when(col("month") === "Feb", "02").when(col("month") === "Mar", "03").when(col("month") === "Apr", "04").when(col("month") === "May", "05").when(col("month") === "Jun", "06").when(col("month") === "Jul", "07").when(col("month") === "Aug", "08").when(col("month") === "Sep", "09").when(col("month") === "Oct", "10").when(col("month") === "Nov", "10").when(col("month") === "Dec", "12").otherwise("Unknown"))
+val df14=df13.select(concat(col("year"),lit("-"),col("month"),lit("-"),col("date"),lit(" "), col("current_time")).as("timestamp"),col("hostname"),col("data_source_ip"),col("policy_name"),col("action"),col("src_ip"),col("src_port").cast("long").as("src_port"),col("dst_ip"),col("dst_port").cast("long").as("dst_port"),col("url"),col("attack_type"),col("data_source_type"),col("batch_ingestion_timestamp"),col("value"))
+val df15 = df14.withColumn("time", to_timestamp(col("timestamp"))).withColumn("partition_date",to_date(split(col("time")," ")(0)))
+val df16 = df15.select("timestamp","hostname","data_source_ip","policy_name","action","src_ip","src_port","dst_ip","dst_port","url","attack_type","data_source_type","value","batch_ingestion_timestamp","partition_date")
+
+val df2 = df.filter(col("value").contains("APPFW"))
+val df21=df2.withColumn("mssgtimestamp",regexp_extract(col("value"),">(\\s+[:\\d\\W]+)",1)).withColumn("hostname",regexp_extract(col("value"),"GMT\\s+([\\S]+)",1)).withColumn("data_source_ip",regexp_extract(col("value"),"DataSource_Ip:([.\\d]+)",1)).withColumn("policy_name",regexp_extract(col("value"),"-\\s+([\\S]+)",1)).withColumn("action",regexp_extract(col("value"),"<(\\S+)>,",1)).withColumn("src_ip",regexp_extract(col("value"),"default\\s+APPFW\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+(\\S+)",1)).withColumn("src_port",lit("null")).withColumn("dst_ip",lit("null")).withColumn("dst_port",lit("null")).withColumn("url",regexp_extract(col("value"),"(http[\\S]+)",1)).withColumn("attack_type",regexp_extract(col("value"),"default\\s+APPFW\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+\\S+\\s+([\\s\\S]+)<blocked>",1)).withColumn("data_source_type",lit("CITRIX NETSCALER")).withColumn("batch_ingestion_timestamp",current_timestamp)
+val df22=df21.withColumn("month", regexp_extract(col("value"),"\\s+(\\d+)",1)).withColumn("date", regexp_extract(col("value"),"\\s+\\d+\\/(\\d+)",1)).withColumn("current_time", regexp_extract(col("value"),":(\\S+)\\s",1)).withColumn("current_date",current_date()).withColumn("year",regexp_extract(col("value"),"\\s+\\d+\\/\\d+\\/(\\d+)",1)).drop(col("current_date"))
+val df24=df22.select(concat(col("year"),lit("-"),col("month"),lit("-"),col("date"),lit(" "), col("current_time")).as("timestamp"),col("hostname"),col("data_source_ip"),col("policy_name"),col("action"),col("src_ip"),col("src_port").cast("long").as("src_port"),col("dst_ip"),col("dst_port").cast("long").as("dst_port"),col("url"),col("attack_type"),col("data_source_type"),col("batch_ingestion_timestamp"),col("value"))
+val df25 = df24.withColumn("time", to_timestamp(col("timestamp"))).withColumn("partition_date",to_date(split(col("time")," ")(0)))
+val df26 = df25.select("timestamp","hostname","data_source_ip","policy_name","action","src_ip","src_port","dst_ip","dst_port","url","attack_type","data_source_type","value","batch_ingestion_timestamp","partition_date")
+val dfWithlog= df16.union(df26)
+val outDF = dfWithlog.withColumnRenamed("value","log")
+
+
+
