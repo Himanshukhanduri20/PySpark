@@ -1,0 +1,72 @@
+<166>Jun  1 07:33:21  (time_stamp) 
+TM-JIO-Console-1 (data source host_name) 
+LEEF: 2.0|Trend Micro|Deep Security Manager|50.0.1189|851|cat=System ( log category )
+#011name=Reconnaissance Detected: Network or Port Scan ( attack type) 
+#011desc=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan. ( description )
+#011sev=6 ( seviority )
+#011src=192.168.83.163 ( src_ip) 
+#011usrName=System ( user _name)
+#011target=10.129.76.76 (distip)
+(sidcpaymeng08) (desitination host)
+#011msg=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.( rule_message)
+#011TrendMicroDsScannerIp=10.129.76.75 ( data source ip) 
+#011TrendMicroDsTargetPortList=7001;17000;17001;17002 (destination port )
+#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011
+
+
+
+
+(#011target=)[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}
+
+(#011TrendMicroDsScannerIp=)[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}
+
+(#011TrendMicroDsTargetPortList=[\d*;]*\d*)
+
+date time (>[a-zA-Z]+\s*\d+\s*[\d+:]+)
+
+
+
+
+(#011name=[a-zA-Z:\s]+)     attack type
+(011desc=[a-zA-Z\s\/.]+)
+(011sev=[\d]+)          sev
+(011usrName=[a-zA-Z \s]+)
+(#011target=[0-9 . ( ) a-zA-Z ]+)
+(#011msg=[0-9 . \/ a-zA-Z ]+)
+
+https://www.youtube.com/c/OnlineTeachingwithNidhi/playlists
+
+
+
+
+
+
+
+
+<166>Jun  1 07:39:01 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Manager|50.0.1189|851|cat=System#011name=Reconnaissance Detected: Network or Port Scan#011desc=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011sev=6#011src=192.168.83.163#011usrName=System#011target=10.129.76.76 (sidcpaymeng08)#011msg=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011TrendMicroDsScannerIp=10.129.76.75#011TrendMicroDsTargetPortList=7001;17000;17001;17002#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011
+
+| <134> 06/03/2022:10:13:37 GMT NVMBD1S83R11PLB11 0-PPE-10 : default APPFW APPFW_XMLPAYLOAD_CONTENT_TYPE_MISMATCH 3612840076 1654251217792478 :  2405:201:d013:c070:3488:243b:43de:762f 890616843-PPE10 - JIO.com_12C_Custom https://www.jio.com/ XML Mismatched content-type in HTTP header detected="text/xml;charset=utf-16". <blocked>,DataSource_Ip:10.204.38.77                                                                                                                                                                                                                                                                                                                 |
+| <134> 06/03/2022:10:13:37 GMT NVMBD1S83R11PLB11 0-PPE-11 : default APPFW APPFW_XMLPAYLOAD_CONTENT_TYPE_MISMATCH 3746793652 1654251217794477 :  2405:201:c008:a0cf:8812:4b61:b26f:c101 978495930-PPE11 - JIO.com_12C_Custom https://www.jio.com/ XML Mismatched content-type in HTTP header detected="text/xml;charset=utf-16". <blocked>,DataSource_Ip:10.204.38.77  
+
+<166>Jun  1 07:50:23 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Manager|50.0.1189|851|cat=System#011name=Reconnaissance Detected: Network or Port Scan#011desc=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011sev=6#011src=192.168.83.163#011usrName=System#011target=10.129.76.76 (sidcpaymeng08)#011msg=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011TrendMicroDsScannerIp=10.129.76.75#011TrendMicroDsTargetPortList=7001;17000;17001;17002#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011
+
+<166>Jun  1 07:56:04 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Manager|50.0.1189|851|cat=System#011name=Reconnaissance Detected: Network or Port Scan#011desc=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011sev=6#011src=192.168.83.163#011usrName=System#011target=10.129.76.76 (sidcpaymeng08)#011msg=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011TrendMicroDsScannerIp=10.129.76.75#011TrendMicroDsTargetPortList=7001;17000;17001;17002#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011
+
+<166>Jun  1 08:01:45 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Manager|50.0.1189|851|cat=System#011name=Reconnaissance Detected: Network or Port Scan#011desc=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011sev=6#011src=192.168.83.163#011usrName=System#011target=10.129.76.76 (sidcpaymeng08)#011msg=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011TrendMicroDsScannerIp=10.129.76.75#011TrendMicroDsTargetPortList=7001;17000;17001;17002#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011
+
+<166>Jun  1 08:07:26 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Manager|50.0.1189|851|cat=System#011name=Reconnaissance Detected: Network or Port Scan#011desc=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011sev=6#011src=192.168.83.163#011usrName=System#011target=10.129.76.76 (sidcpaymeng08)#011msg=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011TrendMicroDsScannerIp=10.129.76.75#011TrendMicroDsTargetPortList=7001;17000;17001;17002#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011
+
+<166>Jun  1 08:13:07 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Manager|50.0.1189|851|cat=System#011name=Reconnaissance Detected: Network or Port Scan#011desc=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011sev=6#011src=192.168.83.163#011usrName=System#011target=10.129.76.76 (sidcpaymeng08)#011msg=The Agent/Appliance detected an attempt to scan a computer or a network. Check the Agent/Appliance Events to see the details of the scan.#011TrendMicroDsScannerIp=10.129.76.75#011TrendMicroDsTargetPortList=7001;17000;17001;17002#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011
+
+Xg..)..Jy/<166>Jun  7 08:06:58 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Agent|50.0.1191|1011265|cat=Intrusion Prevention#011name=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011desc=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011sev=6#011cn1=170#011cn1Label=Host ID#011dvc=10.136.220.53#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011dstMAC=00:50:56:96:A8:B5#011srcMAC=00:50:56:96:A6:70#011TrendMicroDsFrameType=IP#011src=10.136.220.54#011dst=10.136.220.53#011in=0#011cs3=DF 0#011cs3Label=Fragmentation Bits#011proto=TCP#011srcPort=42312#011dstPort=9200#011cs2=ACK#011cs2Label=TCP Flags#011cnt=3#011act=Reset#011cn3=0#011cn3Label=DPI Packet Position#011cs5=0#011cs5Label=DPI Stream Position #011cs1="CVE-2021-44228_2"#011cs1Label=DPI Note#011cs6=0#011cs6Label=DPI Flags..........c..b..
+.Xg..)..N..<166>Jun  7 08:06:58 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Agent|50.0.1191|1011265|cat=Intrusion Prevention#011name=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011desc=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011sev=6#011cn1=170#011cn1Label=Host ID#011dvc=10.136.220.53#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011dstMAC=00:50:56:96:A8:B5#011srcMAC=00:50:56:96:A6:70#011TrendMicroDsFrameType=IP#011src=10.136.220.54#011dst=10.136.220.53#011in=0#011cs3=DF 0#011cs3Label=Fragmentation Bits#011proto=TCP#011srcPort=42316#011dstPort=9200#011cs2=ACK PSH#011cs2Label=TCP Flags#011cnt=1#011act=Reset#011cn3=0#011cn3Label=DPI Packet Position#011cs5=0#011cs5Label=DPI Stream Position #011cs1="CVE-2021-44228_2"#011cs1Label=DPI Note#011cs6=0#011cs6Label=DPI Flags................
+.Xg..)..T..<166>Jun  7 08:07:30 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Agent|50.0.1191|1011265|cat=Intrusion Prevention#011name=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011desc=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011sev=6#011cn1=167#011cn1Label=Host ID#011dvchost=nvmbdprv010027#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011dstMAC=00:50:56:96:28:9C#011srcMAC=00:50:56:96:88:CC#011TrendMicroDsFrameType=IP#011src=10.136.220.100#011dst=10.136.220.52#011in=0#011cs3=DF 0#011cs3Label=Fragmentation Bits#011proto=TCP#011srcPort=42580#011dstPort=9200#011cs2=ACK PSH#011cs2Label=TCP Flags#011cnt=1#011act=Reset#011cn3=0#011cn3Label=DPI Packet Position#011cs5=0#011cs5Label=DPI Stream Position #011cs1="CVE-2021-44228_2"#011cs1Label=DPI Note#011cs6=0#011cs6Label=DPI Flags........c..b.N|.
+.Xg..)..Pd.<166>Jun  7 08:07:19 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Agent|50.0.1191|1011265|cat=Intrusion Prevention#011name=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011desc=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011sev=6#011cn1=167#011cn1Label=Host ID#011dvchost=nvmbdprv010027#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011dstMAC=00:50:56:96:28:9C#011srcMAC=00:50:56:96:88:CC#011TrendMicroDsFrameType=IP#011src=10.136.220.100#011dst=10.136.220.52#011in=0#011cs3=DF 0#011cs3Label=Fragmentation Bits#011proto=TCP#011srcPort=42538#011dstPort=9200#011cs2=ACK#011cs2Label=TCP Flags#011cnt=6#011act=Reset#011cn3=0#011cn3Label=DPI Packet Position#011cs5=0#011cs5Label=DPI Stream Position #011cs1="CVE-2021-44228_2"#011cs1Label=DPI Note#011cs6=0#011cs6Label=DPI Flags....c..b.0}.g...
+.Xg..)..SIp<166>Jun  7 08:06:54 TM-JIO-Console-1 LEEF: 2.0|Trend Micro|Deep Security Agent|50.0.1191|1011265|cat=Intrusion Prevention#011name=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011desc=Apache Log4j Remote Code Execution Vulnerability (CVE-2021-45046)#011sev=6#011cn1=170#011cn1Label=Host ID#011dvc=10.136.220.53#011TrendMicroDsTenant=246885564059#011TrendMicroDsTenantId=6417#011dstMAC=00:50:56:96:A8:B5#011srcMAC=00:50:56:96:A6:70#011TrendMicroDsFrameType=IP#011src=10.136.220.54#011dst=10.136.220.53#011in=7306#011cs3=DF 0#011cs3Label=Fragmentation Bits#011proto=TCP#011srcPort=42304#011dstPort=9200#011cs2=ACK#011cs2Label=TCP Flags#011cnt=1#011act=Reset#011cn3=3064#011cn3Label=DPI Packet Position#011cs5=4033#011cs5Label=DPI Stream Position #011cs1="CVE-2021-44228_2"#011cs1Label=DPI Note#011cs6=9#011cs6Label=DPI Flags.....@...c..b.>.
+
+
+
+
+
+10.143.88.103
+
