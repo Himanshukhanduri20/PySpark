@@ -1,0 +1,33 @@
+
+
+# cmd   ---->>> pyspark --master yarn --driver-memory 4g --executor-memory 4g --num-executors 4 --executor-cores 2 --queue network-jobs --conf spark.ui.port=8600
+
+import pyspark.sql.functions as F
+from pyspark.sql.functions import when
+from pyspark.sql.functions import col
+df = spark.read.csv("/content/sample_data/example_log.log",sep="|")
+df1=df.withColumn("_c6",F.regexp_extract(df._c0,'(>[a-zA-Z]+\s*\d+\s*[\d+:]+)',1))
+df1=df1.withColumn("Time",F.regexp_extract(df1._c6,'([\d+:]+\d)',1))
+df1=df1.withColumn('_c6', F.regexp_replace('_c6', '>', '')).withColumn('Date', F.regexp_replace('_c6', '([\d+:]+\d)', '')).withColumn('Data_source_host_name', F.regexp_extract(df1._c0, '([a-zA-Z]+[-][a-zA-Z]+[-][a-zA-Z]+[-]\d+)',1))
+
+df1=df.withColumn("current_date",F.current_date())
+df1=df1.withColumn("year",F.regexp_extract(df1.current_date,"([\\d]+)",1)).drop(df1.current_date)
+df1=df1.withColumn("Day",F.regexp_extract(df1.Date,'(\d+)',1))
+df1=df1.withColumn("Month",F.regexp_extract(df1.Date,'([a-zA-Z]+)',1))
+df1=df1.withColumn("Month", when(col("month") == "Jan", "01").when(col("month") == "Feb", "02").when(col("month") == "Mar", "03").when(col("month") == "Apr", "04").when(col("month") == "May", "05").when(col("month") == "Jun", "06").when(col("month") == "Jul", "07").when(col("month") == "Aug", "08").when(col("month") == "Sep", "09").when(col("month") == "Oct", "10").when(col("month") == "Nov", "10").when(col("month") == "Dec", "12").otherwise("Unknown"))
+df1=df1.withColumn("Date",F.concat_ws("-",df1.year,df1.month,df1.Day))
+
+df1=df1.withColumn('Log_category',F.regexp_replace(F.regexp_extract(df1._c5,'(cat=[a-zA-Z]+)',1),'cat=',""))
+df1=df1.withColumn("Attack_type",F.regexp_replace(F.regexp_extract(df1._c5,'(#011name=[a-zA-Z:\s]+)',1),'#011name=',""))
+df1=df1.withColumn("Description",F.regexp_replace(F.regexp_extract(df1._c5,'(011desc=[a-zA-Z\s\/.]+)',1),'011desc=',""))
+df1=df1.withColumn("Seviority",F.regexp_replace(F.regexp_extract(df1._c5,'(011sev=[\d]+)',1),'011sev=',""))
+df1=df1.withColumn("Source_ip",F.regexp_replace(F.regexp_extract(df1._c5,'(#011src=[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})',1),'#011src=',""))
+df1=df1.withColumn("User_name",F.regexp_replace(F.regexp_extract(df1._c5,'(011usrName=[a-zA-Z \s]+)',1),'011usrName=',""))
+df1=df1.withColumn("Destination_ip",F.regexp_extract(F.regexp_extract(df1._c5,'(#011target=[0-9 . ( ) a-zA-Z ]+)',1),'([0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})',1))
+
+df1=df1.withColumn("Desitination_host",F.regexp_replace(F.regexp_replace(F.regexp_extract(df1._c5,'(#011target=[0-9 . ( ) a-zA-Z ]+)',1),'([0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})',""),'#011target=' ,""))
+df1=df1.withColumn("Rule_message",F.regexp_replace(F.regexp_extract(df1._c5,'(#011msg=[0-9 . \/ a-zA-Z ]+)',1),'#011msg=',""))
+df1=df1.withColumn("Data_source_ip",F.regexp_replace(F.regexp_extract(df1._c5,'(#011TrendMicroDsScannerIp=[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})',1),'#011TrendMicroDsScannerIp=',""))
+df1=df1.withColumn("Destination_port",F.regexp_replace(F.regexp_extract(df1._c5,'(TrendMicroDsTargetPortList=[\d*;]*\d*)',1),'TrendMicroDsTargetPortList=',""))
+
+df2=df1.drop('_c0','_c1','_c2','_c3','_c4','_c5','_c6','year','Day','Month')
