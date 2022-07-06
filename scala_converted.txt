@@ -1,0 +1,39 @@
+import spark.sqlContext.implicits._
+import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types.TimestampType
+import org.apache.spark.sql.functions.when
+import org.apache.spark.sql.functions.col
+
+
+val df = spark.read.text("/data/cybersecurity/tmp/example_log.log")
+val df1 = df.filter(col("value").contains("Trend Micro"))
+val df11=df1.withColumn("current_date",current_date().as("current_date"))
+val df12=df11.withColumn("year",regexp_extract(col("current_date"),"([\\d]+)",1)).drop(col("current_date"))
+val df13 =df12.withColumn("_c6",regexp_extract(col("value"),"(>[a-zA-Z]+\\s*\\d+\\s*[\\d+:]+)",1))
+val df14=df13.withColumn("Time",regexp_extract(col("_c6"),"(\\d+:\\d+:\\d+)",1))
+
+val df15=df14.withColumn("_c6",regexp_replace(col("_c6"), ">", "")).withColumn("Date", regexp_replace(col("_c6"), "(\\d+:\\d+:\\d+)", "")).withColumn("Data_source_host_name", regexp_extract(col("value"), "([a-zA-Z]+[-][a-zA-Z]+[-][a-zA-Z]+[-]\\d+)",1))
+val df16=df15.withColumn("Day",regexp_extract(col("Date"),"(\\d+)",1))
+val df17=df16.withColumn("month",regexp_extract(col("Date"),"([a-zA-Z]+)",1))
+val df18=df17.withColumn("month", when(col("month") === "Jan", "01").when(col("month") === "Feb", "02").when(col("month") === "Mar", "03").when(col("month") === "Apr", "04").when(col("month") === "May", "05").when(col("month") === "Jun", "06").when(col("month") === "Jul", "07").when(col("month") === "Aug", "08").when(col("month") === "Sep", "09").when(col("month") === "Oct", "10").when(col("month") === "Nov", "10").when(col("month") === "Dec", "12").otherwise("Unknown"))
+
+
+val df19=df18.withColumn("Date",concat(col("year"),lit("-"),col("month"),lit("-"),col("day"),lit(" ")))
+val df20=df19.withColumn("Log_category",regexp_replace(regexp_extract(col("value"),"(cat=[a-zA-Z]+)",1),"cat=",""))
+
+
+
+val df21=df20.withColumn("Attack_type",regexp_replace(regexp_extract(col("value"),"(#011name=[a-zA-Z:\\s]+)",1),"#011name=",""))
+val df22=df21.withColumn("Description",regexp_replace(regexp_extract(col("value"),"(011desc=[a-zA-Z\\s\\/.]+)",1),"011desc=",""))
+val df23=df22.withColumn("Seviority",regexp_replace(regexp_extract(col("value"),"(011sev=[\\d]+)",1),"011sev=",""))
+val df24=df23.withColumn("Source_ip",regexp_replace(regexp_extract(col("value"),"(#011src=[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})",1),"#011src=",""))
+val df25=df24.withColumn("User_name",regexp_replace(regexp_extract(col("value"),"(011usrName=[a-zA-Z \\s]+)",1),"011usrName=",""))
+val df26=df25.withColumn("Destination_ip",regexp_extract(regexp_extract(col("value"),"(#011target=[0-9 . ( ) a-zA-Z ]+)",1),"([0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})",1))
+val df27=df26.withColumn("Desitination_host",regexp_replace(regexp_replace(regexp_extract(col("value"),"(#011target=[0-9 . ( ) a-zA-Z ]+)",1),"([0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})",""),"#011target=" ,""))
+val df28=df27.withColumn("Rule_message",regexp_replace(regexp_extract(col("value"),"(#011msg=[0-9 . \\/ a-zA-Z ]+)",1),"#011msg=",""))
+val df29=df28.withColumn("Data_source_ip",regexp_replace(regexp_extract(col("value"),"(#011TrendMicroDsScannerIp=[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})",1),"#011TrendMicroDsScannerIp=",""))
+val df30=df29.withColumn("Destination_port",regexp_replace(regexp_extract(col("value"),"(TrendMicroDsTargetPortList=[\\d*;]*\\d*)",1),"TrendMicroDsTargetPortList=",""))
+val df31=df30.withColumn("DataSource_IP",regexp_replace(regexp_extract(col("value"),"(DataSource_IP:[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3})",1),"DataSource_IP:",""))
+
+val df32=df31.drop("value","_c6","year","Day","Month")
